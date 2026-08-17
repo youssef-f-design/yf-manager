@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0b0b">
+<title>YF Manager</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#090909;color:#f5f5f5;font-family:Tahoma,Arial,sans-serif}.app{display:flex;min-height:100vh}.sidebar{width:250px;background:#111;border-left:1px solid #292929;padding:20px;position:fixed;right:0;top:0;bottom:0;z-index:10}.brand{display:flex;gap:12px;align-items:center;margin-bottom:30px}.brand span{width:48px;height:48px;border:1px solid #caa64b;border-radius:12px;display:grid;place-items:center;color:#d7b35a;font-size:20px;font-weight:900}.brand b{display:block}.brand small,.muted{color:#888;font-size:12px}nav button{width:100%;padding:13px;margin:4px 0;border:0;background:transparent;color:#aaa;text-align:right;border-radius:10px;cursor:pointer;font-size:14px}nav button:hover,nav button.active{background:#201b10;color:#e4c263}.side-foot{position:absolute;bottom:20px;color:#666;font-size:11px;line-height:1.6}.main{margin-right:250px;width:calc(100% - 250px);padding:20px;max-width:1500px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px}.topbar h1{margin:0;font-size:24px}.topbar span{color:#777;font-size:12px}.icon{display:none}.gold-btn,.report-actions button{background:#c9a348;color:#111;border:0;border-radius:9px;padding:11px 16px;font-weight:bold;cursor:pointer}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:15px}.card,.panel{background:#111;border:1px solid #292929;border-radius:14px;padding:18px}.card span{color:#888;font-size:13px}.card strong{display:block;font-size:25px;margin-top:12px;color:#e5c76b}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}.panel h2{font-size:17px;margin:0 0 15px}.summary{display:grid;gap:10px}.summary div{background:#171717;padding:12px;border-radius:8px;color:#aaa}.summary b{float:left;color:#fff}.page{display:none}.page.active{display:block}.toolbar{display:flex;gap:10px;margin-bottom:15px}.toolbar input{flex:1}.toolbar input,label input,.toolbar select{background:#111;color:#fff;border:1px solid #333;border-radius:9px;padding:11px}table{width:100%;border-collapse:collapse;min-width:700px}th,td{padding:13px 10px;border-bottom:1px solid #242424;text-align:right}th{color:#cdb05b;font-size:13px}td{color:#ddd;font-size:13px}.table-wrap{overflow:auto}.actions button{margin-left:5px;background:#222;border:1px solid #444;color:#ddd;border-radius:6px;padding:6px;cursor:pointer}.actions .del{color:#ff7777}.list{display:grid;gap:8px}.list div{display:flex;justify-content:space-between;padding:11px;background:#171717;border-radius:8px}.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;place-items:center;padding:15px}.modal.show{display:grid}.modal-box{background:#111;border:1px solid #333;border-radius:15px;padding:22px;width:min(560px,100%);max-height:90vh;overflow:auto;position:relative}.close{position:absolute;left:15px;top:12px;background:none;border:0;color:#aaa;font-size:25px;cursor:pointer}.modal form{display:grid;gap:12px}.modal label{display:grid;gap:6px;color:#aaa;font-size:13px}.modal input,.modal select,.modal textarea{background:#181818;color:#fff;border:1px solid #333;border-radius:8px;padding:11px}.modal textarea{min-height:80px}.modal .submit{margin-top:8px}.danger{background:#451b1b;color:#ff9b9b;border:1px solid #6b2929;padding:11px 15px;border-radius:8px;cursor:pointer}.report-actions{display:flex;gap:10px;margin-bottom:15px}.report-line{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #242424}.report-line b{color:#e5c76b}hr{border:0;border-top:1px solid #292929;margin:25px 0}#toast{position:fixed;bottom:20px;left:20px;background:#c9a348;color:#111;padding:11px 16px;border-radius:8px;display:none;z-index:50}@media(max-width:800px){.sidebar{transform:translateX(100%);transition:.2s;width:240px}.sidebar.open{transform:translateX(0)}.main{margin-right:0;width:100%;padding:14px}.icon{display:block;background:#171717;color:#ddd;border:1px solid #333;border-radius:8px;padding:8px}.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.topbar h1{font-size:19px}.toolbar{flex-wrap:wrap}.toolbar input{min-width:150px}.card strong{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><span>YF</span><div><b>YF Manager</b><small>إدارة الأسطول والمالية</small></div></div>
+    <nav>
+      <button data-page="dashboard" class="active">لوحة التحكم</button>
+      <button data-page="income">الدخل</button>
+      <button data-page="expenses">المصروفات</button>
+      <button data-page="vehicles">السيارات</button>
+      <button data-page="trips">الرحلات</button>
+      <button data-page="reports">التقارير</button>
+      <button data-page="settings">الإعدادات</button>
+    </nav>
+    <div class="side-foot">يعمل بدون إنترنت • البيانات محفوظة على الجهاز</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="menuBtn" class="icon">☰</button>
+      <div><h1 id="pageTitle">لوحة التحكم</h1><span id="today"></span></div>
+      <button id="backupBtn" class="gold-btn">نسخة احتياطية</button>
+    </header>
+
+    <section id="dashboard" class="page active">
+      <div class="cards">
+        <div class="card"><span>إجمالي الدخل</span><strong id="totalIncome">0 ج.م</strong></div>
+        <div class="card"><span>إجمالي المصروفات</span><strong id="totalExpenses">0 ج.م</strong></div>
+        <div class="card"><span>صافي الربح</span><strong id="netProfit">0 ج.م</strong></div>
+        <div class="card"><span>عدد السيارات</span><strong id="vehicleCount">0</strong></div>
+      </div>
+      <div class="grid2">
+        <div class="panel"><h2>ملخص اليوم</h2><div class="summary"><div>دخل اليوم <b id="todayIncome">0</b></div><div>مصروفات اليوم <b id="todayExpenses">0</b></div><div>صافي اليوم <b id="todayProfit">0</b></div></div></div>
+        <div class="panel"><h2>حالة الأسطول</h2><div class="summary"><div>رحلات نشطة <b id="activeTrips">0</b></div><div>سيارات متاحة <b id="availableVehicles">0</b></div><div>سيارات صيانة <b id="maintenanceVehicles">0</b></div></div></div>
+      </div>
+      <div class="panel"><h2>آخر العمليات</h2><div id="recentList" class="list"></div></div>
+    </section>
+
+    <section id="income" class="page">
+      <div class="toolbar"><button class="gold-btn" onclick="openForm('income')">+ إضافة دخل</button><input id="incomeSearch" placeholder="بحث في الدخل..."></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>البيان</th><th>السيارة</th><th>المبلغ</th><th>إجراءات</th></tr></thead><tbody id="incomeTable"></tbody></table></div></div>
+    </section>
+
+    <section id="expenses" class="page">
+      <div class="toolbar"><button class="gold-btn" onclick="openForm('expense')">+ إضافة مصروف</button><input id="expenseSearch" placeholder="بحث في المصروفات..."></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>الفئة</th><th>البيان</th><th>السيارة</th><th>المبلغ</th><th>إجراءات</th></tr></thead><tbody id="expenseTable"></tbody></table></div></div>
+    </section>
+
+    <section id="vehicles" class="page">
+      <div class="toolbar"><button class="gold-btn" onclick="openForm('vehicle')">+ إضافة سيارة</button><input id="vehicleSearch" placeholder="بحث عن سيارة..."></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>رقم السيارة</th><th>اللوحة</th><th>السائق</th><th>الهاتف</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="vehicleTable"></tbody></table></div></div>
+    </section>
+
+    <section id="trips" class="page">
+      <div class="toolbar"><button class="gold-btn" onclick="openForm('trip')">+ إضافة رحلة</button><input id="tripSearch" placeholder="بحث في الرحلات..."></div>
+      <div class="panel"><div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>السيارة</th><th>من</th><th>إلى</th><th>النولون</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody id="tripTable"></tbody></table></div></div>
+    </section>
+
+    <section id="reports" class="page">
+      <div class="cards"><div class="card"><span>الدخل</span><strong id="rIncome">0</strong></div><div class="card"><span>المصروفات</span><strong id="rExpenses">0</strong></div><div class="card"><span>الربح</span><strong id="rProfit">0</strong></div></div>
+      <div class="panel"><h2>تقرير مالي</h2><div class="report-actions"><button onclick="printReport()">طباعة التقرير</button><button onclick="exportCSV()">تصدير CSV / Excel</button></div><div id="reportBody"></div></div>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="panel"><h2>الإعدادات</h2><label>اسم النظام<input id="appName" value="YF Manager"></label><button class="gold-btn" onclick="saveSettings()">حفظ الإعدادات</button><hr><button class="danger" onclick="clearAll()">حذف كل بيانات المشروع</button><p class="muted">احتفظ بنسخة احتياطية قبل حذف البيانات.</p></div>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="modal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2 id="modalTitle"></h2><form id="form"></form></div></div>
+<div id="toast"></div>
+<script>
+const KEY="yf_manager_v1";
+let db=JSON.parse(localStorage.getItem(KEY)||'{"income":[],"expenses":[],"vehicles":[],"trips":[],"settings":{"appName":"YF Manager"}}');
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const money=n=>new Intl.NumberFormat("ar-EG",{maximumFractionDigits:2}).format(Number(n)||0)+" ج.م";
+const today=()=>new Date().toISOString().slice(0,10);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render();toast("تم الحفظ بنجاح");}
+function toast(t){let x=$("#toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",1800)}
+$("#today").textContent=new Date().toLocaleDateString("ar-EG",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+$$("nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+function showPage(p){$$(".page").forEach(x=>x.classList.remove("active"));$("#"+p).classList.add("active");$$("nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===p));$("#pageTitle").textContent={dashboard:"لوحة التحكم",income:"الدخل",expenses:"المصروفات",vehicles:"السيارات",trips:"الرحلات",reports:"التقارير",settings:"الإعدادات"}[p];$(".sidebar").classList.remove("open");render()}
+$("#menuBtn").onclick=()=>$(".sidebar").classList.toggle("open");
+
+function vehicleName(id){let v=db.vehicles.find(x=>x.id===id);return v?v.number:"—"}
+function openForm(type,id=null){
+ let old=(db[type==="income"?"income":type==="expense"?"expenses":type==="vehicle"?"vehicles":"trips"]||[]).find(x=>x.id===id)||{};
+ $("#modalTitle").textContent=(id?"تعديل ":"إضافة ")+({income:"دخل",expense:"مصروف",vehicle:"سيارة",trip:"رحلة"}[type]);
+ let vopts=db.vehicles.map(v=>`<option value="${v.id}" ${old.vehicleId===v.id?"selected":""}>${v.number} - ${v.plate||""}</option>`).join("");
+ let f="";
+ if(type==="income") f=`<label>التاريخ<input name="date" type="date" value="${old.date||today()}" required></label><label>البيان<input name="description" value="${old.description||""}" required></label><label>السيارة<select name="vehicleId"><option value="">بدون سيارة</option>${vopts}</select></label><label>المبلغ<input name="amount" type="number" min="0" step="0.01" value="${old.amount||""}" required></label><label>ملاحظات<textarea name="notes">${old.notes||""}</textarea></label>`;
+ if(type==="expense") f=`<label>التاريخ<input name="date" type="date" value="${old.date||today()}" required></label><label>الفئة<select name="category">${["صيانة","زيت محرك","زيت فتيس","كاوتش","بطارية","سولار","غسيل","قطع غيار","إصلاحات","مخالفة مرور","ترخيص وتأمين","مرتب سائق","مصروفات أخرى"].map(x=>`<option ${old.category===x?"selected":""}>${x}</option>`).join("")}</select></label><label>البيان<input name="description" value="${old.description||""}" required></label><label>السيارة<select name="vehicleId"><option value="">بدون سيارة</option>${vopts}</select></label><label>المبلغ<input name="amount" type="number" min="0" step="0.01" value="${old.amount||""}" required></label><label>مورد / ورشة<input name="supplier" value="${old.supplier||""}"></label><label>ملاحظات<textarea name="notes">${old.notes||""}</textarea></label>`;
+ if(type==="vehicle") f=`<label>رقم السيارة<input name="number" value="${old.number||""}" required></label><label>رقم اللوحة<input name="plate" value="${old.plate||""}"></label><label>اسم السائق<input name="driver" value="${old.driver||""}"></label><label>هاتف السائق<input name="phone" value="${old.phone||""}"></label><label>انتهاء الرخصة<input name="licenseExpiry" type="date" value="${old.licenseExpiry||""}"></label><label>الحالة<select name="status">${["متاحة","في رحلة","صيانة"].map(x=>`<option ${old.status===x?"selected":""}>${x}</option>`).join("")}</select></label>`;
+ if(type==="trip") f=`<label>التاريخ<input name="date" type="date" value="${old.date||today()}" required></label><label>السيارة<select name="vehicleId" required><option value="">اختر السيارة</option>${vopts}</select></label><label>من<input name="from" value="${old.from||""}" required></label><label>إلى<input name="to" value="${old.to||""}" required></label><label>النولون<input name="freight" type="number" min="0" step="0.01" value="${old.freight||""}" required></label><label>الحالة<select name="status">${["مكتملة","نشطة","ملغاة"].map(x=>`<option ${old.status===x?"selected":""}>${x}</option>`).join("")}</select></label><label>ملاحظات<textarea name="notes">${old.notes||""}</textarea></label>`;
+ $("#form").innerHTML=f+`<button class="gold-btn submit" type="submit">حفظ</button>`;
+ $("#form").onsubmit=e=>{e.preventDefault();let o=Object.fromEntries(new FormData(e.target));o.id=id||uid();if(o.amount)o.amount=Number(o.amount);if(o.freight)o.freight=Number(o.freight);let k=type==="income"?"income":type==="expense"?"expenses":type==="vehicle"?"vehicles":"trips";let i=db[k].findIndex(x=>x.id===o.id);if(i>=0)db[k][i]=o;else db[k].push(o);closeModal();save()};
+ $("#modal").classList.add("show");
+}
+function closeModal(){$("#modal").classList.remove("show")}
+function edit(t,id){openForm(t,id)}
+function del(k,id){if(confirm("هل أنت متأكد من الحذف؟")){db[k]=db[k].filter(x=>x.id!==id);save()}}
+function rows(k,type,search=""){let arr=db[k].filter(x=>JSON.stringify(x).includes(search));return arr}
+function render(){
+ let inc=db.income.reduce((s,x)=>s+Number(x.amount||0),0), exp=db.expenses.reduce((s,x)=>s+Number(x.amount||0),0);
+ $("#totalIncome").textContent=money(inc);$("#totalExpenses").textContent=money(exp);$("#netProfit").textContent=money(inc-exp);$("#vehicleCount").textContent=db.vehicles.length;
+ let ti=db.income.filter(x=>x.date===today()).reduce((s,x)=>s+Number(x.amount||0),0),te=db.expenses.filter(x=>x.date===today()).reduce((s,x)=>s+Number(x.amount||0),0);
+ $("#todayIncome").textContent=money(ti);$("#todayExpenses").textContent=money(te);$("#todayProfit").textContent=money(ti-te);
+ $("#activeTrips").textContent=db.trips.filter(x=>x.status==="نشطة").length;$("#availableVehicles").textContent=db.vehicles.filter(x=>x.status==="متاحة").length;$("#maintenanceVehicles").textContent=db.vehicles.filter(x=>x.status==="صيانة").length;
+ $("#incomeTable").innerHTML=rows("income","income",$("#incomeSearch")?.value||"").reverse().map(x=>`<tr><td>${x.date}</td><td>${x.description}</td><td>${vehicleName(x.vehicleId)}</td><td>${money(x.amount)}</td><td class="actions"><button onclick="edit('income','${x.id}')">تعديل</button><button class="del" onclick="del('income','${x.id}')">حذف</button></td></tr>`).join("")||empty(5);
+ $("#expenseTable").innerHTML=rows("expenses","expense",$("#expenseSearch")?.value||"").reverse().map(x=>`<tr><td>${x.date}</td><td>${x.category}</td><td>${x.description}</td><td>${vehicleName(x.vehicleId)}</td><td>${money(x.amount)}</td><td class="actions"><button onclick="edit('expense','${x.id}')">تعديل</button><button class="del" onclick="del('expenses','${x.id}')">حذف</button></td></tr>`).join("")||empty(6);
+ $("#vehicleTable").innerHTML=rows("vehicles","vehicle",$("#vehicleSearch")?.value||"").map(x=>`<tr><td>${x.number}</td><td>${x.plate||"—"}</td><td>${x.driver||"—"}</td><td>${x.phone||"—"}</td><td>${x.status}</td><td class="actions"><button onclick="edit('vehicle','${x.id}')">تعديل</button><button class="del" onclick="del('vehicles','${x.id}')">حذف</button></td></tr>`).join("")||empty(6);
+ $("#tripTable").innerHTML=rows("trips","trip",$("#tripSearch")?.value||"").reverse().map(x=>`<tr><td>${x.date}</td><td>${vehicleName(x.vehicleId)}</td><td>${x.from}</td><td>${x.to}</td><td>${money(x.freight)}</td><td>${x.status}</td><td class="actions"><button onclick="edit('trip','${x.id}')">تعديل</button><button class="del" onclick="del('trips','${x.id}')">حذف</button></td></tr>`).join("")||empty(7);
+ let all=[...db.income.map(x=>({d:x.date,t:"دخل",desc:x.description,a:x.amount})),...db.expenses.map(x=>({d:x.date,t:"مصروف",desc:x.description,a:-x.amount}))].sort((a,b)=>b.d.localeCompare(a.d)).slice(0,8);
+ $("#recentList").innerHTML=all.map(x=>`<div><span>${x.d} — ${x.t}: ${x.desc}</span><b>${money(x.a)}</b></div>`).join("")||"<p class='muted'>لا توجد عمليات بعد.</p>";
+ $("#rIncome").textContent=money(inc);$("#rExpenses").textContent=money(exp);$("#rProfit").textContent=money(inc-exp);
+ $("#reportBody").innerHTML=`<div class="report-line"><span>إجمالي الدخل</span><b>${money(inc)}</b></div><div class="report-line"><span>إجمالي المصروفات</span><b>${money(exp)}</b></div><div class="report-line"><span>صافي الربح</span><b>${money(inc-exp)}</b></div><div class="report-line"><span>عدد عمليات الدخل</span><b>${db.income.length}</b></div><div class="report-line"><span>عدد عمليات المصروفات</span><b>${db.expenses.length}</b></div>`;
+}
+function empty(n){return `<tr><td colspan="${n}" class="muted">لا توجد بيانات</td></tr>`}
+["incomeSearch","expenseSearch","vehicleSearch","tripSearch"].forEach(id=>document.getElementById(id)?.addEventListener("input",render));
+function saveSettings(){db.settings.appName=$("#appName").value||"YF Manager";document.title=db.settings.appName;save()}
+function clearAll(){if(confirm("سيتم حذف كل البيانات نهائيًا من هذا الجهاز. متأكد؟")){localStorage.removeItem(KEY);location.reload()}}
+$("#backupBtn").onclick=()=>{let blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="YF-Manager-Backup.json";a.click();URL.revokeObjectURL(a.href);toast("تم إنشاء النسخة الاحتياطية")};
+function exportCSV(){let lines=["النوع,التاريخ,البيان,السيارة,المبلغ"];db.income.forEach(x=>lines.push(["دخل",x.date,x.description,vehicleName(x.vehicleId),x.amount].join(",")));db.expenses.forEach(x=>lines.push(["مصروف",x.date,x.description,vehicleName(x.vehicleId),x.amount].join(",")));let a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"}));a.download="YF-Manager-Report.csv";a.click()}
+function printReport(){let w=window.open("","_blank");w.document.write(`<html dir="rtl"><head><title>تقرير YF Manager</title><style>body{font-family:Arial;padding:30px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ccc;padding:10px}</style></head><body><h1>YF Manager - التقرير المالي</h1>${$("#reportBody").innerHTML}<hr><h2>الدخل</h2><table><tr><th>التاريخ</th><th>البيان</th><th>المبلغ</th></tr>${db.income.map(x=>`<tr><td>${x.date}</td><td>${x.description}</td><td>${money(x.amount)}</td></tr>`).join("")}</table><h2>المصروفات</h2><table><tr><th>التاريخ</th><th>البيان</th><th>المبلغ</th></tr>${db.expenses.map(x=>`<tr><td>${x.date}</td><td>${x.description}</td><td>${money(x.amount)}</td></tr>`).join("")}</table><script>print()<\/script></body></html>`);w.document.close()}
+$("#appName").value=db.settings.appName||"YF Manager";document.title=db.settings.appName||"YF Manager";render();
+
+</script>
+</body>
+</html>
